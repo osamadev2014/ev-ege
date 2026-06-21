@@ -1,0 +1,17 @@
+Adobe After Effects v22.0 Windows 64 render log for project “Untitled Project.aep”
+
+Rendering started on 6/21/2026 at 3:07:08 PM
+
+  6/21/2026 3:07:08 PM: Starting composition “VideoBackground”.
+
+  Output To: E:\Downloads\VideoBackground.mov    6/21/2026 3:08:22 PM: Finished composition “VideoBackground”.
+
+
+  6/21/2026 3:08:22 PM: Starting composition “Comp 1”.
+
+  Output To: E:\Downloads\Comp 1.mov    6/21/2026 3:12:46 PM: Finished composition “Comp 1”.
+
+
+  Total Time Elapsed: 5 Min, 38 Sec
+Log closed on 6/21/2026 at 3:12:46 PM
+
