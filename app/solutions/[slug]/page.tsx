@@ -7,9 +7,7 @@ import { solutions } from "@/lib/site-data"
 import { getWorksPublic } from "@/lib/works"
 import { ArrowLeft, Check } from "lucide-react"
 
-export function generateStaticParams() {
-  return solutions.map((s) => ({ slug: s.slug }))
-}
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

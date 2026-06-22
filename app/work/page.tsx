@@ -4,6 +4,8 @@ import { PageHero } from "@/components/page-hero"
 import { WorkGallery } from "@/components/work-gallery"
 import { getWorksPublic } from "@/lib/works"
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: "أعمالنا | Evico agency",
   description: "محفظة الأعمال — مشاريع تجمع بين الاستراتيجية والإبداع لعلامات تجارية تؤمن بقيمة التأثير.",

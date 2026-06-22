@@ -10,6 +10,8 @@ import { NewsSection } from "@/components/news-section"
 import { CtaSection } from "@/components/cta-section"
 import { SiteFooter } from "@/components/site-footer"
 
+export const dynamic = "force-dynamic"
+
 export default async function Page() {
   return (
     <>
