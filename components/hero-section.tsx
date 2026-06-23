@@ -80,12 +80,12 @@ export function HeroSection() {
         >
           <div className="flex w-max animate-marquee-ltr items-center gap-14 px-8">
             {[...clientLogos, ...clientLogos].map((client, i) => (
-              <div key={`${client.name}-${i}`} className="relative h-8 w-20 shrink-0">
+              <div key={`${client.name}-${i}`} className="relative h-6 w-16 shrink-0">
                 <Image
                   src={`/hero-clients/${client.file}`}
                   alt={client.name}
                   fill
-                  sizes="80px"
+                  sizes="64px"
                   className="object-contain brightness-0 invert"
                 />
               </div>
