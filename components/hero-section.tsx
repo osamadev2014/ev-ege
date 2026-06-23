@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "motion/react"
-import { Play } from "lucide-react"
 
 export function HeroSection() {
   return (
@@ -62,19 +61,7 @@ export function HeroSection() {
           الذكاء الاصطناعي و GenAI.
         </motion.p>
 
-        <motion.button
-          type="button"
-          className="inline-flex items-center gap-3 text-sm text-white/55 transition hover:text-white group"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-        >
-          <span className="relative flex size-9 items-center justify-center rounded-full border border-white/25 group-hover:border-white/60 transition-colors shrink-0">
-            <span className="absolute inset-0 rounded-full border border-white/15 animate-ping-slow" />
-            <Play className="size-3 translate-x-px fill-current" />
-          </span>
-          شاهد الشوريل
-        </motion.button>
+
       </div>
     </section>
   )
