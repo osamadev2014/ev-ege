@@ -30,6 +30,7 @@ export function NewsSection() {
                     src={a.img}
                     alt={a.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <span className="absolute right-4 top-4 rounded-full bg-background/80 px-3 py-1 text-xs font-bold backdrop-blur-sm">

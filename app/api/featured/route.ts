@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 import { supabase } from "@/lib/supabase-server"
 
@@ -23,6 +24,9 @@ export async function PUT(request: Request) {
   if (slugs.length > 0) {
     await supabase.from("works").update({ featured: true }).in("slug", slugs)
   }
+
+  revalidatePath("/")
+  revalidatePath("/work")
 
   return NextResponse.json({ success: true })
 }

@@ -10,7 +10,7 @@ import { NewsSection } from "@/components/news-section"
 import { CtaSection } from "@/components/cta-section"
 import { SiteFooter } from "@/components/site-footer"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
 
 export default async function Page() {
   return (

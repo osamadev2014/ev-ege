@@ -7,8 +7,14 @@ import { SiteFooter } from "@/components/site-footer"
 import { Reveal } from "@/components/reveal"
 import { BackLink } from "@/components/back-link"
 import { getWorkBySlug, getWorksPublic } from "@/lib/works"
+import { supabase } from "@/lib/supabase-server"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const { data: works } = await supabase.from("works").select("slug")
+  return (works || []).map((w) => ({ slug: w.slug }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -36,6 +42,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
               alt={work.client}
               fill
               priority
+              sizes="100vw"
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
@@ -70,7 +77,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
               {work.images.slice(1).map((img, i) => (
                 <Reveal as="div" delay={i} key={img.id}>
                   <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-border">
-                    <Image src={img.url || "/placeholder.svg"} alt={`${work.client} — ${i + 2}`} fill className="object-cover" />
+                    <Image src={img.url || "/placeholder.svg"} alt={`${work.client} — ${i + 2}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover" />
                   </div>
                 </Reveal>
               ))}
@@ -129,6 +136,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                       src={w.images?.[0]?.url || "/placeholder.svg"}
                       alt={w.title}
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>

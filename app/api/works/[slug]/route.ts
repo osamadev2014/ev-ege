@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 import { supabase } from "@/lib/supabase-server"
 
@@ -57,6 +58,10 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ sl
     }
   }
 
+  revalidatePath("/")
+  revalidatePath("/work")
+  revalidatePath(`/work/${slug}`)
+
   return NextResponse.json({ success: true })
 }
 
@@ -78,6 +83,9 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 })
   }
+
+  revalidatePath("/")
+  revalidatePath("/work")
 
   return NextResponse.json({ success: true })
 }

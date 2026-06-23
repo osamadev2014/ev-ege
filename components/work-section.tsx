@@ -36,6 +36,7 @@ export async function WorkSection() {
                     src={w.banner || w.images?.[0]?.url || "/placeholder.svg"}
                     alt={w.title}
                     fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />

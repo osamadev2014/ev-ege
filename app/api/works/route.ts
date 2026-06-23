@@ -1,27 +1,14 @@
+import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 import { supabase } from "@/lib/supabase-server"
 
 export async function GET() {
   const { data: works } = await supabase
     .from("works")
-    .select("*")
+    .select("*, images:work_images(id, work_id, url, sort_order), deliverables:work_deliverables(id, work_id, name, sort_order)")
     .order("created_at", { ascending: false })
 
-  if (!works) {
-    return NextResponse.json([])
-  }
-
-  const withRelations = await Promise.all(
-    works.map(async (w) => {
-      const [images, deliverables] = await Promise.all([
-        supabase.from("work_images").select("*").eq("work_id", w.id).order("sort_order"),
-        supabase.from("work_deliverables").select("*").eq("work_id", w.id).order("sort_order"),
-      ])
-      return { ...w, images: images.data || [], deliverables: deliverables.data || [] }
-    })
-  )
-
-  return NextResponse.json(withRelations)
+  return NextResponse.json(works || [])
 }
 
 export async function POST(request: Request) {
@@ -72,6 +59,10 @@ export async function POST(request: Request) {
     )
     if (delErr) console.error("Error inserting deliverables:", delErr)
   }
+
+  revalidatePath("/")
+  revalidatePath("/work")
+  revalidatePath("/solutions", "layout")
 
   return NextResponse.json(work)
 }

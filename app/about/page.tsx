@@ -45,7 +45,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal as="div">
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border">
-                <Image src="/about/team.webp" alt="فريق Evico agency — الرياض" fill className="object-cover" />
+                <Image src="/about/team.webp" alt="فريق Evico agency — الرياض" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 to-transparent p-6">
                   <p className="text-sm font-bold">فريق Evico agency — الرياض</p>
                 </div>

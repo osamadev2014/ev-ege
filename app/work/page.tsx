@@ -4,7 +4,7 @@ import { PageHero } from "@/components/page-hero"
 import { WorkGallery } from "@/components/work-gallery"
 import { getWorksPublic } from "@/lib/works"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
 
 export const metadata = {
   title: "أعمالنا | Evico agency",
