@@ -5,3 +5,11 @@ node_modules/
 
 # Local Netlify folder
 .netlify
+
+# Optimization scripts (one-time use)
+optimize-images.js
+optimize-video.js
+AUDIT-REPORT.md
+
+# Video backup
+public/videos/VideoBackground.original.webm

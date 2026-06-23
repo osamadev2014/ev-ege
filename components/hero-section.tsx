@@ -14,7 +14,7 @@ export function HeroSection() {
           loop
           muted
           playsInline
-          poster="/hero-mountains.png"
+          poster="/hero-mountains.webp"
           style={{ opacity: 0.65 }}
         >
           <source src="/videos/VideoBackground.webm" type="video/webm" />

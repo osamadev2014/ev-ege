@@ -1,32 +1,33 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "motion/react"
 
 const clients = [
-  { name: "وزارة البلديات والإسكان", img: "/clients/client-1.png" },
+  { name: "وزارة البلديات والإسكان", img: "/clients/client-1.webp" },
   { name: "وزارة البيئة والمياه والزراعة", img: "/clients/client-2.svg" },
   { name: "وزارة الثقافة", img: "/clients/client-3.svg" },
   { name: "وزارة الحج والعمرة", img: "/clients/client-4.svg" },
   { name: "الهيئة الملكية لمكة المكرمة", img: "/clients/client-5.svg" },
-  { name: "هيئة البحر الأحمر", img: "/clients/client-6.png" },
-  { name: "البنك المركزي السعودي", img: "/clients/client-7.png" },
-  { name: "موان", img: "/clients/client-8.png" },
+  { name: "هيئة البحر الأحمر", img: "/clients/client-6.webp" },
+  { name: "البنك المركزي السعودي", img: "/clients/client-7.webp" },
+  { name: "موان", img: "/clients/client-8.webp" },
   { name: "المركز الوطني للنخيل والتمور", img: "/clients/client-9.svg" },
-  { name: "الاتحاد السعودي للملاكمة", img: "/clients/client-10.png" },
-  { name: "شركة الدرعية", img: "/clients/client-11.png" },
-  { name: "نادك", img: "/clients/client-12.png" },
-  { name: "مجموعة السنبلة", img: "/clients/client-13.png" },
+  { name: "الاتحاد السعودي للملاكمة", img: "/clients/client-10.webp" },
+  { name: "شركة الدرعية", img: "/clients/client-11.webp" },
+  { name: "نادك", img: "/clients/client-12.webp" },
+  { name: "مجموعة السنبلة", img: "/clients/client-13.webp" },
   { name: "أراسكو", img: "/clients/client-14.svg" },
-  { name: "إنتاج", img: "/clients/client-15.png" },
-  { name: "قصص", img: "/clients/client-16.png" },
+  { name: "إنتاج", img: "/clients/client-15.webp" },
+  { name: "قصص", img: "/clients/client-16.webp" },
   { name: "إسناد", img: "/clients/client-17.svg" },
-  { name: "Yelo", img: "/clients/client-18.png" },
-  { name: "زد", img: "/clients/client-19.png" },
+  { name: "Yelo", img: "/clients/client-18.webp" },
+  { name: "زد", img: "/clients/client-19.webp" },
   { name: "ساري", img: "/clients/client-20.svg" },
-  { name: "دخون", img: "/clients/client-21.png" },
-  { name: "بست شيلد", img: "/clients/client-22.png" },
-  { name: "رصف", img: "/clients/client-23.png" },
-  { name: "سليمان الراجحي العقارية", img: "/clients/client-24.png" },
+  { name: "دخون", img: "/clients/client-21.webp" },
+  { name: "بست شيلد", img: "/clients/client-22.webp" },
+  { name: "رصف", img: "/clients/client-23.webp" },
+  { name: "سليمان الراجحي العقارية", img: "/clients/client-24.webp" },
 ]
 
 function Row({ items }: { items: typeof clients }) {
@@ -37,11 +38,15 @@ function Row({ items }: { items: typeof clients }) {
           key={`${client.name}-${i}`}
           className="flex h-20 min-w-44 items-center justify-center rounded-xl border border-border bg-card px-6"
         >
-          <img
-            src={client.img}
-            alt={client.name}
-            className="max-h-10 max-w-28 object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-          />
+          <div className="relative h-10 w-28 shrink-0">
+            <Image
+              src={client.img}
+              alt={client.name}
+              fill
+              sizes="112px"
+              className="object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+            />
+          </div>
         </div>
       ))}
     </div>
