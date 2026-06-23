@@ -4,10 +4,10 @@ import Image from "next/image"
 import { motion } from "motion/react"
 
 const clientLogos = [
-  { name: "clup", file: "clup.svg", size: "lg" },
+  { name: "clup", file: "clup.svg" },
   { name: "Furious", file: "furious.svg" },
   { name: "powr", file: "powr.svg" },
-  { name: "riyadh", file: "riyadh.svg", size: "lg" },
+  { name: "riyadh", file: "riyadh.svg" },
   { name: "senam", file: "senam.svg" },
   { name: "tu", file: "tu.svg" },
 ]
@@ -80,12 +80,12 @@ export function HeroSection() {
         >
           <div className="flex w-max animate-marquee-ltr items-center gap-14 px-8">
             {[...clientLogos, ...clientLogos].map((client, i) => (
-              <div key={`${client.name}-${i}`} className={`relative shrink-0 ${client.size === "lg" ? "h-11 w-30" : "h-10 w-28"}`}>
+              <div key={`${client.name}-${i}`} className="relative h-10 w-28 shrink-0">
                 <Image
                   src={`/hero-clients/${client.file}`}
                   alt={client.name}
                   fill
-                  sizes={client.size === "lg" ? "120px" : "112px"}
+                  sizes="112px"
                   className="object-contain brightness-0 invert"
                 />
               </div>
