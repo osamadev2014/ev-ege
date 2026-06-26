@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef } from "react"
 import {
   DndContext,
   closestCenter,
@@ -91,16 +91,7 @@ export function ShowcaseEditor({
     setBlocks(arrayMove(showcase.blocks, oldIndex, newIndex))
   }
 
-  async function uploadImage(): Promise<string | null> {
-    const input = document.createElement("input")
-    input.type = "file"
-    input.accept = ".png,.jpg,.jpeg"
-    const file = await new Promise<File | null>((resolve) => {
-      input.onchange = () => resolve(input.files?.[0] || null)
-      input.click()
-    })
-    if (!file) return null
-
+  async function uploadImage(file: File): Promise<string | null> {
     if (!ALLOWED_TYPES.includes(file.type)) {
       alert("فقط PNG و JPG مسموح بها")
       return null
@@ -158,6 +149,7 @@ export function ShowcaseEditor({
           <AddBlockButton icon={Grid3X3} label="Photo Grid" onClick={() => addBlock("grid")} />
         </div>
         <button
+          type="button"
           onClick={() => setShowSettings(true)}
           className="flex items-center gap-2 rounded-md border border-slate-700/50 px-3 py-2 text-sm text-foreground hover:bg-slate-800"
         >
@@ -203,6 +195,7 @@ export function ShowcaseEditor({
 function AddBlockButton({ icon: Icon, label, onClick }: { icon: React.ComponentType<{ size?: number }>; label: string; onClick: () => void }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className="flex items-center gap-2 rounded-md border border-slate-700/50 bg-slate-800/50 px-3 py-2 text-sm text-foreground transition-colors hover:border-primary hover:bg-slate-800"
     >
@@ -223,7 +216,7 @@ function SortableBlock({
   onUpdate: (updates: Partial<ShowcaseBlock>) => void
   onDuplicate: () => void
   onRemove: () => void
-  onUploadImage: () => Promise<string | null>
+  onUploadImage: (file: File) => Promise<string | null>
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: block.id })
   const style = {
@@ -240,6 +233,7 @@ function SortableBlock({
     >
       <div className="flex items-start gap-2">
         <button
+          type="button"
           {...attributes}
           {...listeners}
           className="mt-3 flex shrink-0 cursor-grab touch-none items-center justify-center rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-slate-700/50 hover:text-foreground group-hover:opacity-100"
@@ -282,6 +276,7 @@ function ControlButton({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={`flex items-center gap-1 rounded-md px-2 py-1 text-[11px] transition-colors ${
         danger
@@ -302,44 +297,57 @@ function ImageBlockEditor({
 }: {
   block: ShowcaseBlockImage
   onUpdate: (updates: Partial<ShowcaseBlock>) => void
-  onUploadImage: () => Promise<string | null>
+  onUploadImage: (file: File) => Promise<string | null>
 }) {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const url = await onUploadImage(file)
+    if (url) onUpdate({ url })
+    e.target.value = ""
+  }
+
   return (
     <div className="p-3">
-      {block.url ? (
-        <div className="relative cursor-pointer" onClick={async () => {
-          const url = await onUploadImage()
-          if (url) onUpdate({ url })
-        }}>
-          <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
-            <img src={block.url} alt={block.alt || ""} className="h-full w-full object-cover" />
-            <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity hover:opacity-100">
-              <Upload size={24} className="text-white" />
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".png,.jpg,.jpeg"
+        className="hidden"
+        onChange={handleFile}
+      />
+      <div onClick={() => inputRef.current?.click()} className="cursor-pointer">
+        {block.url ? (
+          <>
+            <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
+              <img src={block.url} alt={block.alt || ""} className="h-full w-full object-cover" />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity hover:opacity-100">
+                <Upload size={24} className="text-white" />
+              </div>
+            </div>
+            <div className="mt-2 flex items-center gap-3">
+              <label className="flex items-center gap-1.5 text-xs text-muted-foreground" onClick={(e) => e.stopPropagation()}>
+                <input
+                  type="checkbox"
+                  checked={block.fullWidth || false}
+                  onChange={(e) => onUpdate({ fullWidth: e.target.checked })}
+                  className="size-3.5 accent-primary"
+                />
+                Full width
+              </label>
+            </div>
+          </>
+        ) : (
+          <div className="flex aspect-[16/9] w-full items-center justify-center rounded-lg border-2 border-dashed border-slate-700/50 text-sm text-muted-foreground transition-colors hover:border-primary">
+            <div className="flex flex-col items-center gap-2">
+              <Upload size={24} />
+              <span>Click to upload image</span>
             </div>
           </div>
-          <div className="mt-2 flex items-center gap-3">
-            <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <input
-                type="checkbox"
-                checked={block.fullWidth || false}
-                onChange={(e) => onUpdate({ fullWidth: e.target.checked })}
-                className="size-3.5 accent-primary"
-              />
-              Full width
-            </label>
-          </div>
-        </div>
-      ) : (
-        <button
-          onClick={onUploadImage}
-          className="flex aspect-[16/9] w-full items-center justify-center rounded-lg border-2 border-dashed border-slate-700/50 text-sm text-muted-foreground transition-colors hover:border-primary"
-        >
-          <div className="flex flex-col items-center gap-2">
-            <Upload size={24} />
-            <span>Click to upload image</span>
-          </div>
-        </button>
-      )}
+        )}
+      </div>
     </div>
   )
 }
@@ -355,6 +363,7 @@ function TextBlockEditor({
     <div className="p-3">
       <div className="mb-2 flex gap-2">
         <button
+          type="button"
           onClick={() => onUpdate({ variant: block.variant === "heading" ? "paragraph" : "heading" })}
           className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
             block.variant === "heading" ? "bg-primary/20 text-primary" : "bg-slate-700/50 text-muted-foreground hover:text-foreground"
@@ -363,6 +372,7 @@ function TextBlockEditor({
           {block.variant === "heading" ? "Heading" : "Paragraph"}
         </button>
         <button
+          type="button"
           onClick={() => onUpdate({ align: block.align === "center" ? "start" : "center" })}
           className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
             block.align === "center" ? "bg-primary/20 text-primary" : "bg-slate-700/50 text-muted-foreground hover:text-foreground"
@@ -390,13 +400,18 @@ function GridBlockEditor({
 }: {
   block: ShowcaseBlockGrid
   onUpdate: (updates: Partial<ShowcaseBlock>) => void
-  onUploadImage: () => Promise<string | null>
+  onUploadImage: (file: File) => Promise<string | null>
 }) {
-  async function addGridImage() {
-    const url = await onUploadImage()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const url = await onUploadImage(file)
     if (url) {
       onUpdate({ images: [...block.images, { url, alt: "" }] })
     }
+    e.target.value = ""
   }
 
   function removeGridImage(index: number) {
@@ -405,6 +420,13 @@ function GridBlockEditor({
 
   return (
     <div className="p-3">
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".png,.jpg,.jpeg"
+        className="hidden"
+        onChange={handleFile}
+      />
       <div className="mb-2 flex items-center gap-2">
         <label className="text-xs text-muted-foreground">Columns:</label>
         <select
@@ -428,6 +450,7 @@ function GridBlockEditor({
           <div key={i} className="group/img relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-800">
             <img src={img.url} alt={img.alt || ""} className="h-full w-full object-cover" />
             <button
+              type="button"
               onClick={() => removeGridImage(i)}
               className="absolute left-1 top-1 rounded-md bg-red-500/80 p-1 text-white opacity-0 transition-opacity group-hover/img:opacity-100"
               aria-label="حذف الصورة"
@@ -437,7 +460,8 @@ function GridBlockEditor({
           </div>
         ))}
         <button
-          onClick={addGridImage}
+          type="button"
+          onClick={() => inputRef.current?.click()}
           className="flex aspect-[4/3] items-center justify-center rounded-lg border-2 border-dashed border-slate-700/50 text-muted-foreground transition-colors hover:border-primary"
         >
           <Plus size={20} />

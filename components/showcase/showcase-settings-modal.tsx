@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { X } from "lucide-react"
 import type { ShowcaseSettings } from "@/lib/showcase-types"
 import { CreativeFieldsModal } from "./creative-fields-modal"
@@ -49,7 +50,12 @@ export function ShowcaseSettingsModal({
     onClose()
   }
 
-  return (
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
+  if (!mounted) return null
+
+  return createPortal(
     <>
       <div
         ref={overlayRef}
@@ -66,7 +72,7 @@ export function ShowcaseSettingsModal({
         >
           <div className="flex items-center justify-between border-b border-slate-700/50 p-4">
             <h2 className="text-lg font-bold text-foreground">Project Information</h2>
-            <button onClick={onClose} className="rounded-md p-1.5 text-muted-foreground hover:bg-slate-700/50 hover:text-foreground">
+            <button type="button" onClick={onClose} className="rounded-md p-1.5 text-muted-foreground hover:bg-slate-700/50 hover:text-foreground">
               <X size={18} />
             </button>
           </div>
@@ -76,6 +82,7 @@ export function ShowcaseSettingsModal({
               <label className="block text-sm font-medium text-foreground">Category</label>
               <p className="mt-1 text-xs text-muted-foreground">Up to 3 creative fields</p>
               <button
+                type="button"
                 onClick={() => setShowCreativeFields(true)}
                 className="mt-2 flex w-full flex-wrap gap-1.5 rounded-md border border-slate-700/50 bg-slate-800/50 px-3 py-2.5 text-right text-sm text-foreground hover:border-primary"
               >
@@ -96,7 +103,7 @@ export function ShowcaseSettingsModal({
                 {tags.map((t) => (
                   <span key={t} className="flex items-center gap-1 rounded-md bg-slate-700/50 px-2.5 py-1 text-xs text-foreground">
                     {t}
-                    <button onClick={() => removeTag(t)} className="text-muted-foreground hover:text-red-400">
+                    <button type="button" onClick={() => removeTag(t)} className="text-muted-foreground hover:text-red-400">
                       <X size={12} />
                     </button>
                   </span>
@@ -113,6 +120,7 @@ export function ShowcaseSettingsModal({
                   className="flex-1 rounded-md border border-slate-700/50 bg-slate-800/50 px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary disabled:opacity-50"
                 />
                 <button
+                  type="button"
                   onClick={addTag}
                   disabled={!tagInput.trim() || tags.length >= 10}
                   className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
@@ -137,12 +145,14 @@ export function ShowcaseSettingsModal({
 
           <div className="flex justify-end gap-2 border-t border-slate-700/50 p-4">
             <button
+              type="button"
               onClick={onClose}
               className="rounded-md border border-slate-700/50 px-4 py-2 text-sm text-foreground hover:bg-slate-800"
             >
               Cancel
             </button>
             <button
+              type="button"
               onClick={handleSave}
               className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
             >
@@ -159,6 +169,7 @@ export function ShowcaseSettingsModal({
           onClose={() => setShowCreativeFields(false)}
         />
       )}
-    </>
+    </>,
+    document.body
   )
 }

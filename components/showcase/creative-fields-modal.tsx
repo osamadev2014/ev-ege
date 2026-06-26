@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useRef, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { Search, X, Check } from "lucide-react"
 import { CREATIVE_FIELDS } from "./creative-fields"
 
@@ -48,7 +49,12 @@ export function CreativeFieldsModal({
     })
   }
 
-  return (
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
+  if (!mounted) return null
+
+  return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 px-4"
       onClick={onClose}
@@ -62,7 +68,7 @@ export function CreativeFieldsModal({
       >
         <div className="flex items-center justify-between border-b border-slate-700/50 p-4">
           <h2 className="text-lg font-bold text-foreground">Creative Fields</h2>
-          <button onClick={onClose} className="rounded-md p-1.5 text-muted-foreground hover:bg-slate-700/50 hover:text-foreground">
+          <button type="button" onClick={onClose} className="rounded-md p-1.5 text-muted-foreground hover:bg-slate-700/50 hover:text-foreground">
             <X size={18} />
           </button>
         </div>
@@ -74,6 +80,7 @@ export function CreativeFieldsModal({
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault() }}
             placeholder="Search Creative Fields"
             className="w-full rounded-md border border-slate-700/50 bg-slate-800/50 px-9 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
           />
@@ -121,12 +128,14 @@ export function CreativeFieldsModal({
           <p className="text-xs text-muted-foreground">{draft.length}/3 selected</p>
           <div className="flex gap-2">
             <button
+              type="button"
               onClick={onClose}
               className="rounded-md border border-slate-700/50 px-4 py-2 text-sm text-foreground hover:bg-slate-800"
             >
               Cancel
             </button>
             <button
+              type="button"
               onClick={() => onSave(draft)}
               className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
             >
@@ -135,18 +144,19 @@ export function CreativeFieldsModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
 function FieldRow({ field, checked, onToggle }: { field: string; checked: boolean; onToggle: (f: string) => void }) {
   return (
     <button
+      type="button"
       onClick={() => onToggle(field)}
       className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-right text-sm transition-colors ${
         checked ? "bg-primary/15 text-primary" : "text-foreground hover:bg-slate-700/50"
       }`}
-      disabled={!checked && false}
     >
       <div
         className={`flex size-5 shrink-0 items-center justify-center rounded border ${
