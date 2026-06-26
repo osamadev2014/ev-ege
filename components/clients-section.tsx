@@ -36,7 +36,7 @@ function Row({ items }: { items: typeof clients }) {
       {[...items, ...items].map((client, i) => (
         <div
           key={`${client.name}-${i}`}
-          className="flex h-20 min-w-44 items-center justify-center rounded-xl border border-border bg-card px-6"
+          className="flex h-20 min-w-44 items-center justify-center rounded-md border border-border bg-card px-6"
         >
           <div className="relative h-10 w-28 shrink-0">
             <Image
@@ -44,7 +44,7 @@ function Row({ items }: { items: typeof clients }) {
               alt={client.name}
               fill
               sizes="112px"
-              className="object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+              className="object-contain opacity-50"
             />
           </div>
         </div>
@@ -56,10 +56,10 @@ function Row({ items }: { items: typeof clients }) {
 export function ClientsSection() {
   const half = Math.ceil(clients.length / 2)
   return (
-    <section className="border-t border-border bg-background py-24 lg:py-32">
+    <section className="border-t border-border bg-background py-24 lg:py-28">
       <div className="mx-auto mb-12 max-w-7xl px-5 lg:px-8">
         <motion.p
-          className="mb-4 text-sm font-bold tracking-wide text-primary"
+          className="mb-6 text-xs tracking-[0.2em] uppercase"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -68,11 +68,11 @@ export function ClientsSection() {
           عملاؤنا
         </motion.p>
         <motion.h2
-          className="text-balance text-4xl font-black sm:text-5xl"
+          className="text-3xl font-black sm:text-4xl"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           علامات تجارية نفخر بخدمتها
         </motion.h2>

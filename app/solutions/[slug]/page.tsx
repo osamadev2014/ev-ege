@@ -6,6 +6,7 @@ import { Reveal } from "@/components/reveal"
 import { solutions } from "@/lib/site-data"
 import { getWorksPublic } from "@/lib/works"
 import { ArrowLeft, Check } from "lucide-react"
+import { createMetadata } from "@/lib/utils"
 
 export const revalidate = 60
 
@@ -16,8 +17,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const solution = solutions.find((s) => s.slug === slug)
-  if (!solution) return { title: "الحلول | Evico agency" }
-  return { title: `${solution.title} | Evico agency`, description: solution.tagline }
+  if (!solution) return createMetadata({ title: "الحلول", description: "", path: "/solutions" })
+  return createMetadata({ title: solution.title, description: solution.tagline, path: `/solutions/${slug}` })
 }
 
 export default async function SolutionDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -33,12 +34,6 @@ export default async function SolutionDetailPage({ params }: { params: Promise<{
       <SiteHeader />
       <main>
         <section className="relative overflow-hidden border-b border-border pt-32 pb-16 lg:pt-40 lg:pb-24">
-          <div
-            className="pointer-events-none absolute inset-0 opacity-40"
-            style={{
-              background: "radial-gradient(60% 80% at 80% 0%, rgba(37,99,235,0.25), transparent 70%)",
-            }}
-          />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <Link
               href="/solutions"
@@ -57,17 +52,17 @@ export default async function SolutionDetailPage({ params }: { params: Promise<{
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+        <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-28">
           <Reveal as="div">
-            <p className="mb-3 text-sm font-bold text-primary">ماذا نقدم لهذا القطاع</p>
+            <p className="mb-6 text-xs tracking-[0.2em] uppercase">ماذا نقدم لهذا القطاع</p>
             <h2 className="text-3xl font-black sm:text-4xl">حزمة الخدمات</h2>
           </Reveal>
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {solution.items.map((it, i) => (
-              <Reveal as="div" delay={i % 2} key={it}>
-                <div className="flex items-center gap-4 rounded-2xl border border-border bg-card p-5">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Check className="size-5" />
+            {solution.items.map((it) => (
+              <Reveal as="div" key={it}>
+                <div className="flex items-center gap-4 rounded-md border border-border bg-card p-5">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-md border border-primary/30 text-primary">
+                    <Check className="size-4" />
                   </span>
                   <span className="font-medium">{it}</span>
                 </div>
@@ -93,12 +88,12 @@ export default async function SolutionDetailPage({ params }: { params: Promise<{
           </section>
         )}
 
-        <section className="mx-auto max-w-4xl px-5 py-20 text-center lg:px-8">
+        <section className="mx-auto max-w-4xl px-5 py-24 text-center lg:px-8 lg:py-28">
           <h2 className="text-balance text-3xl font-black sm:text-4xl">هل قطاعك من ضمن اهتماماتنا؟</h2>
           <p className="mx-auto mt-4 max-w-lg text-muted-foreground">لنتحدث عن كيف يمكننا بناء حضور إبداعي يليق بك.</p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 font-bold text-primary-foreground transition hover:opacity-90"
+            className="mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
             تواصل معنا
             <ArrowLeft className="size-4" />

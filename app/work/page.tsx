@@ -3,13 +3,15 @@ import { SiteFooter } from "@/components/site-footer"
 import { PageHero } from "@/components/page-hero"
 import { WorkGallery } from "@/components/work-gallery"
 import { getWorksPublic } from "@/lib/works"
+import { createMetadata } from "@/lib/utils"
 
 export const revalidate = 60
 
-export const metadata = {
-  title: "أعمالنا | Evico agency",
+export const metadata = createMetadata({
+  title: "أعمالنا",
   description: "محفظة الأعمال — مشاريع تجمع بين الاستراتيجية والإبداع لعلامات تجارية تؤمن بقيمة التأثير.",
-}
+  path: "/work",
+})
 
 export default async function WorkPage() {
   const works = await getWorksPublic()

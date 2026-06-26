@@ -1,5 +1,6 @@
 import { SiteHeader } from "@/components/site-header"
 import { HeroSection } from "@/components/hero-section"
+import { TrustSection } from "@/components/trust-section"
 import { StorySection } from "@/components/story-section"
 import { FeaturedWorks } from "@/components/featured-works"
 import { ServicesSection } from "@/components/services-section"
@@ -18,6 +19,7 @@ export default async function Page() {
       <SiteHeader />
       <main>
         <HeroSection />
+        <TrustSection />
         <StorySection />
         <FeaturedWorks />
         <ServicesSection />

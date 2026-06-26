@@ -5,11 +5,13 @@ import { SiteFooter } from "@/components/site-footer"
 import { PageHero } from "@/components/page-hero"
 import { Reveal } from "@/components/reveal"
 import { articles } from "@/lib/site-data"
+import { createMetadata } from "@/lib/utils"
 
-export const metadata = {
-  title: "المدونة | Evico agency",
+export const metadata = createMetadata({
+  title: "المدونة",
   description: "أفكار ورؤى من فريق Evico agency حول الإبداع والتسويق وبناء العلامات التجارية.",
-}
+  path: "/news",
+})
 
 export default function NewsPage() {
   return (
@@ -22,28 +24,28 @@ export default function NewsPage() {
           subtitle="أفكار ورؤى من فريق Evico agency حول الإبداع والتسويق وبناء العلامات التجارية."
         />
 
-        <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+        <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-28">
           <div className="grid gap-8 md:grid-cols-2">
-            {articles.map((a, i) => (
-              <Reveal as="div" delay={i} key={a.slug}>
-                <Link href={`/news/${a.slug}`} className="group block overflow-hidden rounded-3xl border border-border">
+            {articles.map((a) => (
+              <Reveal as="div" key={a.slug}>
+                <Link href={`/news/${a.slug}`} className="group block overflow-hidden rounded-md border border-border">
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
                       src={a.img || "/placeholder.svg"}
                       alt={a.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover"
                     />
                   </div>
                   <div className="p-6 lg:p-8">
                     <div className="flex items-center gap-3 text-xs font-bold">
-                      <span className="rounded-full bg-primary/10 px-3 py-1 tracking-wide text-primary">
+                      <span className="rounded-md bg-primary/10 px-3 py-1 tracking-wide text-primary">
                         {a.category}
                       </span>
                       <span className="text-muted-foreground">{a.date}</span>
                     </div>
-                    <h2 className="mt-4 text-balance text-xl font-bold leading-snug transition-colors group-hover:text-primary lg:text-2xl">
+                    <h2 className="mt-4 text-balance text-xl font-bold leading-snug transition-colors group-hover:text-primary">
                       {a.title}
                     </h2>
                     <p className="mt-3 line-clamp-2 text-pretty leading-relaxed text-muted-foreground">{a.excerpt}</p>

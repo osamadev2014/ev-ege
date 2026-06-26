@@ -8,12 +8,12 @@ export async function FeaturedWorks() {
   if (featured.length === 0) return null
 
   return (
-    <section id="featured-works" className="border-t border-border bg-background py-24 lg:py-32">
+    <section id="featured-works" className="border-t border-border bg-background py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mb-12">
-          <p className="mb-4 text-sm font-bold tracking-wide text-primary">أبرز الأعمال</p>
-          <h2 className="text-balance text-4xl font-black sm:text-5xl">مشاريعنا المميزة</h2>
-          <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
+          <p className="mb-6 text-xs tracking-[0.2em] text-primary uppercase">أبرز الأعمال</p>
+          <h2 className="text-3xl font-black sm:text-4xl">مشاريعنا المميزة</h2>
+          <p className="mt-4 max-w-2xl text-sm text-muted-foreground leading-relaxed">
             مجموعة من أبرز المشاريع التي تعكس خبرتنا وإبداعنا في مختلف المجالات.
           </p>
         </div>
@@ -23,7 +23,7 @@ export async function FeaturedWorks() {
             <Link
               key={w.slug}
               href={`/work/${w.slug}?from=featured`}
-              className="group overflow-hidden rounded-2xl border border-border bg-card block"
+              className="group overflow-hidden rounded-md border border-border bg-card block"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
@@ -31,13 +31,13 @@ export async function FeaturedWorks() {
                   alt={w.client}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover"
                 />
               </div>
               <div className="p-5">
-                <p className="text-xs font-medium text-primary">{w.service}</p>
-                <h3 className="mt-1 text-lg font-bold">{w.client}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{w.description}</p>
+                <p className="text-xs tracking-[0.2em] text-primary uppercase mb-1">{w.service}</p>
+                <h3 className="text-xl font-bold">{w.client}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{w.description}</p>
               </div>
             </Link>
           ))}

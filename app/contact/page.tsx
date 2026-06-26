@@ -4,11 +4,13 @@ import { PageHero } from "@/components/page-hero"
 import { ContactForm } from "@/components/contact-form"
 import { siteContact } from "@/lib/site-data"
 import { Mail, Phone, MapPin } from "lucide-react"
+import { createMetadata } from "@/lib/utils"
 
-export const metadata = {
-  title: "تواصل معنا | Evico agency",
+export const metadata = createMetadata({
+  title: "تواصل معنا",
   description: "تحدث معنا عن مشروعك. نحن هنا لنحوّل أفكارك إلى واقع.",
-}
+  path: "/contact",
+})
 
 export default function ContactPage() {
   return (
@@ -21,7 +23,7 @@ export default function ContactPage() {
           subtitle="تحدث معنا عن مشروعك. نحن هنا لنحوّل أفكارك إلى واقع."
         />
 
-        <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+        <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-28">
           <div className="grid gap-12 lg:grid-cols-[1fr_auto]">
             <ContactForm />
 
@@ -33,7 +35,7 @@ export default function ContactPage() {
                     href={`mailto:${siteContact.email}`}
                     className="flex items-center gap-3 transition hover:text-foreground"
                   >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-border">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-md border border-border">
                       <Mail className="size-4" />
                     </span>
                     {siteContact.email}
@@ -43,13 +45,13 @@ export default function ContactPage() {
                     dir="ltr"
                     className="flex items-center gap-3 transition hover:text-foreground"
                   >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-border">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-md border border-border">
                       <Phone className="size-4" />
                     </span>
                     {siteContact.phone}
                   </a>
                   <p className="flex items-start gap-3">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-border">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-md border border-border">
                       <MapPin className="size-4" />
                     </span>
                     <span className="pt-2 leading-relaxed">{siteContact.address}</span>

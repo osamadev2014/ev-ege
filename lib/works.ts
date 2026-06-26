@@ -31,15 +31,8 @@ export async function getWorksPublic(): Promise<WorkWithRelations[]> {
 }
 
 export async function getWorkBySlug(slug: string): Promise<WorkWithRelations | null> {
-  const select = `${WORK_COLUMNS}, images:work_images(${IMAGE_COLUMNS}), deliverables:work_deliverables(${DELIVERABLE_COLUMNS})`
-
-  const { data } = await supabase
-    .from("works")
-    .select(select)
-    .eq("slug", slug)
-    .single()
-
-  return (data || null) as WorkWithRelations | null
+  const [work] = await fetchWorks({ slug })
+  return work || null
 }
 
 export async function getFeaturedWorks(): Promise<WorkWithRelations[]> {

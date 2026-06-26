@@ -9,6 +9,7 @@ import { BackLink } from "@/components/back-link"
 import { ShowcaseTrigger } from "@/components/showcase/showcase-viewer"
 import { getWorkBySlug, getWorksPublic } from "@/lib/works"
 import { supabase } from "@/lib/supabase-server"
+import { createMetadata } from "@/lib/utils"
 
 export const revalidate = 60
 
@@ -20,8 +21,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const work = await getWorkBySlug(slug)
-  if (!work) return { title: "الأعمال | Evico agency" }
-  return { title: `${work.title} | Evico agency`, description: work.description }
+  if (!work) return createMetadata({ title: "الأعمال", description: "", path: "/work" })
+  return createMetadata({ title: work.title, description: work.description, path: `/work/${slug}` })
 }
 
 export default async function WorkDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -77,10 +78,10 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
 
           {work.images && work.images.length > 1 && (
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {work.images.slice(1).map((img, i) => (
-                <Reveal as="div" delay={i} key={img.id}>
-                  <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-border">
-                    <Image src={img.url || "/placeholder.svg"} alt={`${work.client} — ${i + 2}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover" />
+              {work.images.slice(1).map((img) => (
+                <Reveal as="div" key={img.id}>
+                  <div className="relative aspect-[16/9] overflow-hidden rounded-md border border-border">
+                    <Image src={img.url || "/placeholder.svg"} alt={`${work.client} — ${img.id}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover" />
                   </div>
                 </Reveal>
               ))}
@@ -93,7 +94,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
                 <h2 className="text-3xl font-black">المنجز ضمن المشروع</h2>
                 <div className="mt-4 flex flex-wrap gap-3">
                   {work.deliverables.map((item) => (
-                    <span key={item.id} className="rounded-full border border-border px-4 py-2 text-sm font-medium">
+                    <span key={item.id} className="rounded-md border border-border px-4 py-2 text-sm font-medium">
                       {item.name}
                     </span>
                   ))}
@@ -109,13 +110,13 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
               { num: "03", label: "النتيجة", text: work.result },
             ]
               .filter((s) => s.text)
-              .map((step, i) => (
-                <Reveal as="div" delay={i} key={step.label}>
-                  <div className="flex h-full flex-col rounded-3xl border border-border p-7">
-                    <span className="flex size-11 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+              .map((step) => (
+                <Reveal as="div" key={step.label}>
+                  <div className="flex h-full flex-col rounded-md border border-border p-7">
+                    <span className="flex size-10 items-center justify-center rounded-md border border-primary/40 text-lg font-bold text-primary">
                       {step.num}
                     </span>
-                    <h3 className="mt-5 text-xl font-black">{step.label}</h3>
+                    <h3 className="mt-5 text-xl font-bold">{step.label}</h3>
                     <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">{step.text}</p>
                   </div>
                 </Reveal>
@@ -124,7 +125,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
         </div>
 
         <section className="border-t border-border bg-card">
-          <div className="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+          <div className="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-28">
             <div className="mb-10 flex items-center justify-between">
               <h2 className="text-3xl font-black">أعمال أخرى</h2>
               <Link href="/work" className="text-sm font-bold text-primary hover:underline">
@@ -134,13 +135,13 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {others.map((w) => (
                 <Link key={w.slug} href={`/work/${w.slug}`} className="group block">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-border">
                     <Image
                       src={w.images?.[0]?.url || "/placeholder.svg"}
                       alt={w.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover"
                     />
                   </div>
                   <p className="mt-3 text-sm text-primary">{w.client}</p>

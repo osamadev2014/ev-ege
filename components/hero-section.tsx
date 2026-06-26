@@ -1,22 +1,12 @@
 "use client"
 
-import Image from "next/image"
 import { motion } from "motion/react"
-
-const clientLogos = [
-  { name: "clup", file: "clup.svg", size: "lg" },
-  { name: "Furious", file: "furious.svg" },
-  { name: "powr", file: "powr.svg" },
-  { name: "riyadh", file: "riyadh.svg", size: "lg" },
-  { name: "senam", file: "senam.svg" },
-  { name: "tu", file: "tu.svg" },
-]
 
 export function HeroSection() {
   return (
-    <section className="relative flex min-h-screen flex-col justify-center overflow-hidden" style={{ paddingTop: "5rem" }}>
+    <section className="relative flex min-h-screen flex-col justify-center overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-[#0f172a]" />
+        <div className="absolute inset-0 bg-background" />
         <video
           className="absolute inset-0 size-full object-cover object-center"
           autoPlay
@@ -24,15 +14,15 @@ export function HeroSection() {
           muted
           playsInline
           poster="/hero-mountains.webp"
-          style={{ opacity: 0.65 }}
+          style={{ opacity: 0.3 }}
         >
           <source src="/videos/VideoBackground.webm" type="video/webm" />
         </video>
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-screen-xl px-6 lg:px-16">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 lg:px-8" style={{ paddingTop: "5rem" }}>
         <motion.p
-          className="text-xs tracking-[0.25em] text-white/40 uppercase mb-6"
+          className="text-xs tracking-[0.2em] text-muted-foreground uppercase mb-8"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -41,7 +31,7 @@ export function HeroSection() {
         </motion.p>
 
         <h1
-          className="text-white mb-7"
+          className="text-foreground mb-8"
           style={{
             fontWeight: 900,
             fontSize: "clamp(2.8rem, 8vw, 9rem)",
@@ -52,7 +42,7 @@ export function HeroSection() {
         >
           <motion.span
             className="block"
-            initial={{ opacity: 0, y: 105 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           >
@@ -61,8 +51,7 @@ export function HeroSection() {
         </h1>
 
         <motion.p
-          className="text-white/45 mb-12 max-w-[44ch] leading-relaxed"
-          style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)" }}
+          className="text-base text-muted-foreground max-w-[44ch] leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -70,29 +59,6 @@ export function HeroSection() {
           نقدم جيل جديد من الحلول التسويقية والتواصلية. تعتمد على أحدث تقنيات
           الذكاء الاصطناعي و GenAI.
         </motion.p>
-
-        <div
-          className="relative w-full overflow-hidden pb-6"
-          dir="ltr"
-          style={{
-            maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-          }}
-        >
-          <div className="flex w-max animate-marquee-ltr items-center gap-14 px-8">
-            {[...clientLogos, ...clientLogos].map((client, i) => (
-              <div key={`${client.name}-${i}`} className={`relative shrink-0 ${client.size === "lg" ? "h-16 w-40" : "h-12 w-32"}`}>
-                <Image
-                  src={`/hero-clients/${client.file}`}
-                  alt={client.name}
-                  fill
-                  sizes={client.size === "lg" ? "160px" : "128px"}
-                  className="object-contain brightness-0 invert"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
     </section>
   )

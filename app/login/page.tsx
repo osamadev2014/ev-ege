@@ -31,8 +31,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#111827] p-5" dir="rtl">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-lg border border-border bg-card p-6">
+    <div className="flex min-h-screen items-center justify-center bg-background p-5" dir="rtl">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-md border border-border bg-card p-6">
         <div className="mb-6 flex justify-center">
           <Image
             src="/logos/evico-logo.svg"

@@ -3,7 +3,7 @@ import type { ShowcaseBlock } from "@/lib/showcase-types"
 
 export function ShowcaseRenderer({ blocks }: { blocks: ShowcaseBlock[] }) {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-12">
       {blocks.map((block) => {
         switch (block.type) {
           case "image":
@@ -23,7 +23,7 @@ export function ShowcaseRenderer({ blocks }: { blocks: ShowcaseBlock[] }) {
 function ImageBlock({ block }: { block: ShowcaseBlock & { type: "image" } }) {
   return (
     <div className={block.fullWidth ? "w-full" : "mx-auto w-full max-w-4xl"}>
-      <div className="relative aspect-[16/9] overflow-hidden rounded-xl">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-md">
         <Image src={block.url} alt={block.alt || ""} fill sizes="(max-width: 768px) 100vw, 80vw" className="object-cover" />
       </div>
     </div>
@@ -32,7 +32,7 @@ function ImageBlock({ block }: { block: ShowcaseBlock & { type: "image" } }) {
 
 function TextBlock({ block }: { block: ShowcaseBlock & { type: "text" } }) {
   const Component = block.variant === "heading" ? "h3" : "p"
-  const size = block.variant === "heading" ? "text-2xl font-black" : "text-base leading-relaxed"
+  const size = block.variant === "heading" ? "text-3xl font-black leading-tight" : "text-base leading-relaxed"
   return (
     <div className={`mx-auto w-full max-w-3xl ${block.align === "center" ? "text-center" : "text-start"}`} dir="auto">
       <Component className={`${size} text-foreground`}>{block.content}</Component>
@@ -47,11 +47,11 @@ function GridBlock({ block }: { block: ShowcaseBlock & { type: "grid" } }) {
       style={{
         display: "grid",
         gridTemplateColumns: `repeat(${block.columns}, 1fr)`,
-        gap: "1rem",
+        gap: "1.5rem",
       }}
     >
       {block.images.map((img, i) => (
-        <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-xl">
+        <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-md">
           <Image src={img.url} alt={img.alt || ""} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
         </div>
       ))}

@@ -1,8 +1,11 @@
 import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 import { supabase } from "@/lib/supabase-server"
+import { verifyAdminApi } from "@/lib/auth-helpers"
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ slug: string }> }) {
+  const auth = await verifyAdminApi()
+  if (auth) return auth
   const { slug } = await params
   const body = await request.json()
 
@@ -66,6 +69,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ sl
 }
 
 export async function DELETE(_request: Request, { params }: { params: Promise<{ slug: string }> }) {
+  const auth = await verifyAdminApi()
+  if (auth) return auth
   const { slug } = await params
 
   const { data: work } = await supabase

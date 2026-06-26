@@ -5,16 +5,16 @@ import { articles } from "@/lib/site-data"
 
 export function NewsSection() {
   return (
-    <section className="border-t border-border bg-background py-24 lg:py-32">
+    <section className="border-t border-border bg-background py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mb-12 flex items-end justify-between">
           <div>
-            <p className="mb-4 text-sm font-bold tracking-wide text-primary">الأخبار</p>
-            <h2 className="text-balance text-4xl font-black sm:text-5xl">آخر ما كتبناه</h2>
+            <p className="mb-6 text-xs tracking-[0.2em] uppercase">الأخبار</p>
+            <h2 className="text-3xl font-black sm:text-4xl">آخر ما كتبناه</h2>
           </div>
           <Link
             href="/news"
-            className="inline-flex shrink-0 items-center gap-2 text-sm font-bold transition hover:text-primary"
+            className="text-sm text-foreground/60 hover:text-foreground"
           >
             كل المقالات
             <ArrowLeft className="size-4" />
@@ -25,15 +25,15 @@ export function NewsSection() {
           {articles.map((a) => (
             <article key={a.title}>
               <Link href={`/news/${a.slug}`} className="group block">
-                <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-border">
+                <div className="relative aspect-[16/9] overflow-hidden rounded-md border border-border">
                   <Image
                     src={a.img}
                     alt={a.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover"
                   />
-                  <span className="absolute right-4 top-4 rounded-full bg-background/80 px-3 py-1 text-xs font-bold backdrop-blur-sm">
+                  <span className="absolute right-4 top-4 rounded-md bg-background/80 px-3 py-1 text-xs font-bold">
                     {a.category}
                   </span>
                 </div>
@@ -41,7 +41,7 @@ export function NewsSection() {
                 <h3 className="mt-2 text-balance text-xl font-bold leading-snug transition-colors group-hover:text-primary">
                   {a.title}
                 </h3>
-                <span className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-primary">
+                <span className="mt-3 text-sm font-medium text-primary">
                   اقرأ المقال
                   <ArrowLeft className="size-4" />
                 </span>

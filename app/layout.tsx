@@ -1,31 +1,27 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
+import { createMetadata, siteName } from '@/lib/utils'
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+const title = `${siteName} | وكالة إبداعية`
+const description = 'وكالة إبداعية متكاملة — ذكاء. إبداعي. | A full-service creative agency — Creative. Intelligence.'
 
 export const metadata: Metadata = {
-  title: 'Evico agency | وكالة إبداعية',
-  description:
-    'وكالة إبداعية متكاملة — ذكاء. إبداعي. | A full-service creative agency — Creative. Intelligence.',
+  title,
+  description,
   icons: { icon: '/favicon.svg' },
   openGraph: {
-    title: 'Evico agency | وكالة إبداعية',
-    description: 'وكالة إبداعية متكاملة — ذكاء. إبداعي. | A full-service creative agency — Creative. Intelligence.',
-    siteName: 'Evico agency',
+    title,
+    description,
+    siteName,
     locale: 'ar_SA',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@evico_sa',
-    title: 'Evico agency | وكالة إبداعية',
-    description: 'وكالة إبداعية متكاملة — ذكاء. إبداعي. | A full-service creative agency — Creative. Intelligence.',
+    title,
+    description,
   },
 }
 
@@ -43,7 +39,7 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
-      className={`${geistSans.variable} ${geistMono.variable} bg-background`}
+      className="bg-background"
     >
       <body className="font-sans antialiased">
         {children}

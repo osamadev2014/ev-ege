@@ -5,11 +5,13 @@ import { PageHero } from "@/components/page-hero"
 import { Reveal } from "@/components/reveal"
 import { CtaSection } from "@/components/cta-section"
 import { stats } from "@/lib/site-data"
+import { createMetadata } from "@/lib/utils"
 
-export const metadata = {
-  title: "قصتنا | Evico agency",
+export const metadata = createMetadata({
+  title: "قصتنا",
   description: "الذكاء الإبداعي — Evico agency وكالة إبداعية تأسست في الرياض عام ٢٠١٧.",
-}
+  path: "/about",
+})
 
 export default function AboutPage() {
   return (
@@ -22,7 +24,7 @@ export default function AboutPage() {
           subtitle="ذكاء حقيقي مبني على بيانات، مغلّف بإبداع يخلق أثراً — Evico agency وكالة إبداعية تأسست في الرياض عام ٢٠١٧."
         />
 
-        <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+        <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-28">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <Reveal as="div">
               <p className="mb-3 text-sm font-bold text-primary">فكرتنا</p>
@@ -34,7 +36,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   في عام ٢٠٢٥، نحدد موقفنا بوضوح: لسنا وكالة تستخدم الذكاء الاصطناعي كأداة إضافية. نحن نؤمن بما
-                  نسميه "الذكاء الإبداعي" — حيث يجتمع الذكاء البشري والاصطناعي في منظومة واحدة لإنتاج حلول تواصلية
+                  نسميه &quot;الذكاء الإبداعي&quot; — حيث يجتمع الذكاء البشري والاصطناعي في منظومة واحدة لإنتاج حلول تواصلية
                   لم تكن ممكنة من قبل.
                 </p>
                 <p>
@@ -44,7 +46,7 @@ export default function AboutPage() {
               </div>
             </Reveal>
             <Reveal as="div">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-border">
                 <Image src="/about/team.webp" alt="فريق Evico agency — الرياض" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 to-transparent p-6">
                   <p className="text-sm font-bold">فريق Evico agency — الرياض</p>
@@ -56,8 +58,8 @@ export default function AboutPage() {
 
         <section className="border-y border-border bg-card">
           <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-5 py-4 lg:grid-cols-4 lg:px-8">
-            {stats.map((s, i) => (
-              <Reveal as="div" delay={i} key={s.label} className="px-2 py-8 text-center">
+            {stats.map((s) => (
+              <Reveal as="div" key={s.label} className="px-2 py-8 text-center">
                 <p className="text-4xl font-black text-primary lg:text-5xl">{s.value}</p>
                 <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
               </Reveal>
@@ -65,9 +67,9 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+        <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-28">
           <Reveal as="div">
-            <div className="rounded-3xl border border-border bg-card p-8 lg:p-12">
+            <div className="rounded-md border border-border bg-card p-8 lg:p-12">
               <p className="mb-3 text-sm font-bold text-primary">شركاؤنا</p>
               <h2 className="text-3xl font-black sm:text-4xl">جزء من مجموعة One</h2>
               <p className="mt-5 max-w-3xl text-pretty leading-relaxed text-muted-foreground">

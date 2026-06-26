@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
-import { supabase, supabase as supabaseAdmin } from "@/lib/supabase-server"
+import { supabase } from "@/lib/supabase-server"
+import { verifyAdminApi } from "@/lib/auth-helpers"
 
 const seedWorks = [
   {
@@ -212,9 +213,17 @@ const newWorks = [
 ]
 
 export async function POST() {
-  const hash = await bcrypt.hash("ahmed@osama21129950", 12)
+  const auth = await verifyAdminApi()
+  if (auth) return auth
 
-  const { error: adminError } = await supabaseAdmin
+  const password = process.env.SEED_ADMIN_PASSWORD
+  if (!password) {
+    return NextResponse.json({ error: "SEED_ADMIN_PASSWORD غير معرف في البيئة" }, { status: 500 })
+  }
+
+  const hash = await bcrypt.hash(password, 12)
+
+  const { error: adminError } = await supabase
     .from("admin")
     .upsert({ id: 1, password_hash: hash }, { onConflict: "id" })
 
@@ -228,7 +237,7 @@ export async function POST() {
     const images = (w as Record<string, unknown>).images as string[] | undefined
     const deliverables = (w as Record<string, unknown>).deliverables as string[] | undefined
 
-    const { data: work, error } = await supabaseAdmin
+    const { data: work, error } = await supabase
       .from("works")
       .insert({
         slug: w.slug,
@@ -254,7 +263,7 @@ export async function POST() {
     }
 
     if (images?.length) {
-      await supabaseAdmin.from("work_images").insert(
+      await supabase.from("work_images").insert(
         images.map((url: string, i: number) => ({
           work_id: work.id,
           url,
@@ -264,7 +273,7 @@ export async function POST() {
     }
 
     if (deliverables?.length) {
-      await supabaseAdmin.from("work_deliverables").insert(
+      await supabase.from("work_deliverables").insert(
         deliverables.map((name: string, i: number) => ({
           work_id: work.id,
           name,

@@ -22,9 +22,9 @@ export function ContactForm() {
 
   if (sent) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-border bg-card p-12 text-center">
-        <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground">
-          <Check className="size-7" />
+      <div className="flex flex-col items-center justify-center rounded-md border border-border bg-card p-12 text-center">
+        <div className="mb-5 flex size-14 items-center justify-center rounded-md border border-primary/40 text-primary">
+          <Check className="size-5" />
         </div>
         <h3 className="text-2xl font-bold">تم إرسال رسالتك</h3>
         <p className="mt-2 text-pretty leading-relaxed text-muted-foreground">
@@ -44,7 +44,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+    <form onSubmit={handleSubmit} className="rounded-md border border-border bg-card p-6 sm:p-8">
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <label htmlFor="name" className="text-sm font-bold">
@@ -55,7 +55,7 @@ export function ContactForm() {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="h-11 rounded-lg border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
+            className="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
             placeholder="اكتب اسمك"
           />
         </div>
@@ -69,7 +69,7 @@ export function ContactForm() {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="h-11 rounded-lg border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
+            className="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
             placeholder="email@example.com"
             dir="ltr"
           />
@@ -82,7 +82,7 @@ export function ContactForm() {
             id="phone"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="h-11 rounded-lg border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
+            className="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
             placeholder="05xxxxxxxx"
             dir="ltr"
           />
@@ -95,7 +95,7 @@ export function ContactForm() {
             id="subject"
             value={form.subject}
             onChange={(e) => setForm({ ...form, subject: e.target.value })}
-            className="h-11 rounded-lg border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
+            className="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
           >
             {subjects.map((s) => (
               <option key={s} value={s}>
@@ -115,13 +115,13 @@ export function ContactForm() {
           rows={5}
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
-          className="resize-none rounded-lg border border-input bg-background p-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
+          className="resize-none rounded-md border border-input bg-background p-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"
           placeholder="أخبرنا عن مشروعك أو استفسارك"
         />
       </div>
       <button
         type="submit"
-        className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition hover:opacity-90"
+        className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
       >
         <Send className="size-4" />
         إرسال الرسالة

@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 import { supabase } from "@/lib/supabase-server"
+import { verifyAdminApi } from "@/lib/auth-helpers"
 
 export async function GET() {
   const { data: works } = await supabase
@@ -13,6 +14,8 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
+  const auth = await verifyAdminApi()
+  if (auth) return auth
   const { slugs } = await request.json()
 
   if (!Array.isArray(slugs)) {
